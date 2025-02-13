@@ -2,20 +2,22 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import Pages.LoginPageObjects;
 
 public class Login {
 	static WebDriver driver=null;
 
-	public static void main(String[] args) {
-		loginPageTestCase();
-		
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
 	}
 
-	public static void loginPageTestCase() {
-		driver=new ChromeDriver();
-			    
+	@Test
+	public void loginPageTestCase() {	    
 	    LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
 	    
 	    driver.get("https://customerportal.birdzi.com/en/web/guest/home");
@@ -25,7 +27,15 @@ public class Login {
 	    LoginPageObj.setPassword("Shiv123!@#");
 	    LoginPageObj.ClickSignIn();
 	    LoginPageObj.verifyOffers();
-	    
-	    //driver.close();
+	 }
+	
+	@AfterTest
+	public void tearDownTest() {
+	    driver.close();
+	    driver.quit();
+	    System.out.println("Login completed successfully");
+
+
+		
 	}
 }
