@@ -1112,3 +1112,9 @@ org.eclipse.core.runtime.CoreException: Launch configuration Login references no
 2025-02-13 12:28:13,680 [Worker-55: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\test\resources
 2025-02-13 12:28:23,655 [Worker-59: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\main\resources
 2025-02-13 12:28:23,657 [Worker-59: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\test\resources
+2025-02-13 12:29:31,674 [Worker-56: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\main\resources
+2025-02-13 12:29:31,676 [Worker-56: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\test\resources
+2025-02-13 12:29:43,364 [Worker-56: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\main\resources
+2025-02-13 12:29:43,365 [Worker-56: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\test\resources
+2025-02-13 12:29:54,795 [Worker-61: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\main\resources
+2025-02-13 12:29:54,796 [Worker-61: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\Priyanka\git\repository\CustomerPortal\src\test\resources
