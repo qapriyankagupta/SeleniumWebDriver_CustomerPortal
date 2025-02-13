@@ -14,6 +14,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.CatalogPageObjects;
 import Pages.LoginPageObjects;
 
 public class Catalog {
@@ -27,7 +28,8 @@ public class Catalog {
 	@Test
 	public void loginPageTestCase() {	    
 	    LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
-	    
+	    CatalogPageObjects CatalogPageObj=new CatalogPageObjects(driver);
+
 	    driver.get("https://customerportal.birdzi.com/en/web/guest/home");
 	    driver.manage().window().maximize();
 	    
@@ -45,20 +47,12 @@ public class Catalog {
             ".birdzi.com",  
             "/",null,true);     
 
-        // Add the cookie to the WebDriver's session
         driver.manage().addCookie(sessionCookie);
-             
-           
-        // Now navigate to the new URL (customerportal2.birdzi.com)
-        driver.get("https://customerportal2.birdzi.com");
-        
-       
-
-        // Now the session key is set in the WebDriver session, and you can proceed with your test.
+                   
         driver.get("https://customerportal2.birdzi.com/dev/v1.67-2d33b73a8724704c950c0557f5dca14c1d0cd78f/catalog/products?portalUserCompanyID=3604&portalUserContactID=110");
 	
-        driver.findElement(By.id("searchString")).sendKeys("cheese");
-
+        CatalogPageObj.enterSearch("Cheese");
+        CatalogPageObj.ClickSEARCH();
 	}
 	
 	@AfterTest
