@@ -11,7 +11,7 @@ import com.aventstack.extentreports.reporter.ExtentReporter;
 
 import Pages.LoginPageObjects;
 
-public class Login1 {
+public class ExtentReports {
 	static WebDriver driver=null;
 
 	@BeforeSuite
