@@ -1,0 +1,31 @@
+package tests;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import Pages.LoginPageObjects;
+
+public class LoginPageTestCase {
+	static WebDriver driver=null;
+
+	public static void main(String[] args) {
+		loginPageTestCase();
+		
+	}
+
+	public static void loginPageTestCase() throws InterruptedException {
+		driver=new ChromeDriver();
+			    
+	    LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+	    
+	    driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+	    driver.manage().window().maximize();
+	    
+	    LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+	    Thread.sleep(2000);
+	    LoginPageObj.setPassword("Shiv123!@#");
+	    LoginPageObj.ClickSignIn();
+	    
+	    driver.close();
+	}
+}

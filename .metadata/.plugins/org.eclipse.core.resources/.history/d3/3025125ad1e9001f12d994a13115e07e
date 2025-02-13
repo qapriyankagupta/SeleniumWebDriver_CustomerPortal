@@ -1,0 +1,9 @@
+package Pages;
+
+import org.openqa.selenium.By;
+
+public class LoginPageObjects {
+	By email_field=By.id("_58_login");
+	By password_field=By.id("_58_password");
+
+}

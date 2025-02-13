@@ -1,0 +1,18 @@
+package Pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class LoginPageObjects {
+	WebDriver driver=null;
+	By email_field=By.id("_58_login");
+	By password_field=By.id("_58_password");
+	
+	public void setEmail(String EmailInput) {
+	driver.findElement(email_field).sendKeys(EmailInput);
+}
+	
+	public void setPassword(String PasswordInput) {
+		driver.findElement(password_field).sendKeys(PasswordInput);
+	}	
+}

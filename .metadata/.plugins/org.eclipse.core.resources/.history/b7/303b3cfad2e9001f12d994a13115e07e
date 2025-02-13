@@ -1,0 +1,19 @@
+package tests;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class LoginPageTestCase {
+	static WebDriver driver=null;
+
+	public static void main(String[] args) {
+		
+	}
+
+	public static void loginPageTestCase() {
+		driver=new ChromeDriver();
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+	    driver.manage().window().maximize();
+	    
+	}
+}
