@@ -1,4 +1,4 @@
-package CustomerPortal.CustomerPortal;
+package tests;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
