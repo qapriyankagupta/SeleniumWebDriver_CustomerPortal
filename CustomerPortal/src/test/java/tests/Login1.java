@@ -3,17 +3,25 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentReporter;
 
 import Pages.LoginPageObjects;
 
-public class Login {
+public class Login1 {
 	static WebDriver driver=null;
 
-	@BeforeTest
+	@BeforeSuite
 	public void setupTest() {
 		driver=new ChromeDriver();
+
+		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("Extent.html");
+		ExtentReports extent = new ExtentReports();
+		extent.attachReporter(html);
+
 	}
 
 	@Test
