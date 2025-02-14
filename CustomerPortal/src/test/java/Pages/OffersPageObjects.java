@@ -6,14 +6,15 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LoginPageObjects {
-	WebDriver driver=null;
+public class OffersPageObjects {
+WebDriver driver=null;
 	
 	By email_field=By.id("_58_login");
 	By password_field=By.id("_58_password");
 	By titleOffers=By.xpath("//span[normalize-space()='Offers']");
+	By searchCatalog=By.id("searchString");
 	
-	public LoginPageObjects(WebDriver driver) {
+	public OffersPageObjects(WebDriver driver) {
 		this.driver=driver;
 	}
 	
@@ -26,7 +27,7 @@ public class LoginPageObjects {
 		
 	}	
 
-	public void clickSignIn() {
+	public void ClickSignIn() {
 		driver.findElement(password_field).sendKeys(Keys.RETURN);
 		
 	}	
@@ -50,5 +51,18 @@ public class LoginPageObjects {
 	        System.out.println("Element with text 'OFFERS' not found.");
 	    }
 	}
+	
+	public void enterSearch(String searchInput) {
+		driver.findElement(searchCatalog).sendKeys(searchInput);
+		
+	}	
+
+	public void ClickSEARCH() {
+		driver.findElement(searchCatalog).sendKeys(Keys.RETURN);
+		
+	}	
+	
+	
+	
 
 }

@@ -1,6 +1,9 @@
 package tests;
 
 import org.testng.annotations.Test;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.LoggerNameAwareMessage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterTest;
@@ -11,6 +14,7 @@ import Pages.LoginPageObjects;
 
 public class Login {
 	static WebDriver driver=null;
+	static Logger logger=LogManager.getLogger(Login.class);
 
 	@BeforeTest
 	public void setupTest() {
@@ -26,7 +30,7 @@ public class Login {
 	    
 	    LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
 	    LoginPageObj.setPassword("Shiv123!@#");
-	    LoginPageObj.ClickSignIn();
+	    LoginPageObj.clickSignIn();
 	    LoginPageObj.verifyOffers();
 	 }
 	
@@ -34,6 +38,9 @@ public class Login {
 	public void tearDownTest() {
 	    driver.close();
 	    driver.quit();
-	    System.out.println("Login completed successfully"); 
+	    System.out.println("\n Login completed successfully \n"); 
+	    logger.info("This is Login Test Case");
+	    //logger.error("This is Error");
+	    System.out.println("Login Test Completed");
 	}
 }

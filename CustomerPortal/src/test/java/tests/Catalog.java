@@ -27,38 +27,36 @@ public class Catalog {
 
 	@Test
 	public void loginPageTestCase() {	    
-	    LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
-	    CatalogPageObjects CatalogPageObj=new CatalogPageObjects(driver);
+		LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+		CatalogPageObjects CatalogPageObj=new CatalogPageObjects(driver);
 
-	    driver.get("https://customerportal.birdzi.com/en/web/guest/home");
-	    driver.manage().window().maximize();
-	    
-	    LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
-	    LoginPageObj.setPassword("Shiv123!@#");
-	    LoginPageObj.ClickSignIn();
-	    LoginPageObj.verifyOffers();
-        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+		driver.manage().window().maximize();
 
-	    
-	 // Prepare the cookie with the session key (replace the domain with your site domain)
-        Cookie sessionCookie = new Cookie(
-            "sessionKey",  
-            "MDEzODIxNjg5MzY3OTQwMjM3NTEwMDAwMDE3MTcyMDIyMjEyMjE0MzEyNDAzNDEyMTc0NjMxMiswMA==",  
-            ".birdzi.com",  
-            "/",null,true);     
+		LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+		LoginPageObj.setPassword("Shiv123!@#");
+		LoginPageObj.clickSignIn();
+		LoginPageObj.verifyOffers();
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        driver.manage().addCookie(sessionCookie);
-                   
-        driver.get("https://customerportal2.birdzi.com/dev/v1.67-2d33b73a8724704c950c0557f5dca14c1d0cd78f/catalog/products?portalUserCompanyID=3604&portalUserContactID=110");
-	
-        CatalogPageObj.enterSearch("Cheese");
-        CatalogPageObj.ClickSEARCH();
+		Cookie sessionCookie = new Cookie(
+				"sessionKey",  
+				"MDEzODIxNjg5MzY3OTQwMjM3NTEwMDAwMDE3MTcyMDIyMjEyMjE0MzEyNDAzNDEyMTc0NjMxMiswMA==",  
+				".birdzi.com",  
+				"/",null,true);     
+
+		driver.manage().addCookie(sessionCookie);
+
+		driver.get("https://customerportal2.birdzi.com/dev/v1.67-2d33b73a8724704c950c0557f5dca14c1d0cd78f/catalog/products?portalUserCompanyID=3604&portalUserContactID=110");
+
+		CatalogPageObj.enterSearch("Cheese");
+		CatalogPageObj.ClickSEARCH();
 	}
-	
+
 	@AfterTest
 	public void tearDownTest() {
-	    //driver.close();
-	    //driver.quit();
-	    System.out.println("Login completed successfully"); 
+		//driver.close();
+		//driver.quit();
+		System.out.println("Login completed successfully"); 
 	}
 }
