@@ -1,0 +1,3 @@
+name=PropertiesCongfig
+property.filename=logs
+appender=console,file

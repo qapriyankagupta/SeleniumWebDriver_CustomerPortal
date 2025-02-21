@@ -1,0 +1,89 @@
+package tests;
+
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
+import java.util.Random;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Pages.CatalogPageObjects;
+import Pages.LoginPageObjects;
+
+public class Catalog {
+	static WebDriver driver=null;
+
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
+	}
+
+	@Test
+	public void loginPageTestCase() throws Exception {	    
+		LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+		CatalogPageObjects CatalogPageObj=new CatalogPageObjects(driver);
+
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+		driver.manage().window().maximize();
+
+		LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+		LoginPageObj.setPassword("Shiv123!@#");
+		LoginPageObj.clickSignIn();
+		LoginPageObj.verifyOffers();
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		Cookie sessionCookie = new Cookie(
+				"sessionKey",  
+				"MDEzODIxNjg5MzY3OTQwMjM3NTEwMDAwMDE3MTcyMDIyMjEyMjE0MzEyNDAzNDEyMTc0NjMxMiswMA==",  
+				".birdzi.com",  
+				"/",null,true);     
+
+		driver.manage().addCookie(sessionCookie);
+
+		driver.get("https://customerportal2.birdzi.com/dev/v1.70-68e4db4ff8f58cd83df7e2d0bb845a8a3f898102/catalog/products?portalUserCompanyID=3604&portalUserContactID=110");
+
+		CatalogPageObj.enterSearch("Cheese");
+		CatalogPageObj.ClickSEARCH();
+		
+		 // Find all the list items (assuming they are in <li> elements inside a <ul>)
+        List<WebElement> items = driver.findElements(By.xpath("//ul[@id='scrollingBlock']/virtual-scroller/div[2]/li/div/div[2]/div"));
+
+        // If you have more specific elements, adjust the XPath accordingly
+        // e.g., multiple variations of XPath for different li elements in the list
+
+        // Get a random index from the list of items
+        Random random = new Random();
+        int randomIndex = random.nextInt(items.size());  // This will generate a number between 0 and items.size() - 1
+
+        // Click the randomly selected item
+        WebElement randomItem = items.get(randomIndex);
+        randomItem.click();
+		
+		//driver.findElement(By.xpath("//ul[@id='scrollingBlock']/virtual-scroller/div[2]/li[4]/div/div[2]/div[2]")).click();
+	    driver.findElement(By.linkText("CHANGE IMAGE")).click();
+	    driver.findElement(By.linkText("UPLOAD IMAGE")).click();
+	    
+	    Runtime.getRuntime().exec("C:\\Users\\Priyanka\\Desktop\\CatalogFileUploadScript.exe");
+	    Thread.sleep(2000);
+		
+		
+	}
+
+	@AfterTest
+	public void tearDownTest() {
+		//driver.close();
+		//driver.quit();
+		System.out.println("Login completed successfully"); 
+	}
+}

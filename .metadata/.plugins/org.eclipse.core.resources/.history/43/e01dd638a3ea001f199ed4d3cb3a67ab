@@ -1,0 +1,61 @@
+package tests;
+
+import org.testng.annotations.Test;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Pages.LoginPageObjects;
+
+public class Login1 {
+    static WebDriver driver = null;
+    static Logger logger = LogManager.getLogger(Login.class);
+
+    @BeforeTest
+    public void setupTest() {
+        try {
+            driver = new ChromeDriver();
+            logger.info("Browser launched successfully.");
+        } catch (Exception e) {
+            logger.error("Error while launching browser: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void loginPageTestCase() {
+        try {
+            LoginPageObjects LoginPageObj = new LoginPageObjects(driver);
+            
+            driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+            driver.manage().window().maximize();
+            
+            LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+            LoginPageObj.setPassword("Shiv123!@#");
+            LoginPageObj.clickSignIn();
+            LoginPageObj.verifyOffers();
+            logger.info("Login test case executed successfully.");
+        } catch (Exception e) {
+            logger.error("Error during login test case: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @AfterTest
+    public void tearDownTest() {
+        try {
+            driver.close();
+            driver.quit();
+            System.out.println("\n Login completed successfully \n");
+            logger.info("This is Login Test Case");
+            System.out.println("Login Test Completed");
+        } catch (Exception e) {
+            logger.error("Error during teardown: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+}

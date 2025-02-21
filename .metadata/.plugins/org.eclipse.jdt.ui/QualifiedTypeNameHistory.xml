@@ -5,6 +5,20 @@
     <fullyQualifiedTypeName name="org.openqa.selenium.firefox.FirefoxDriver"/>
     <fullyQualifiedTypeName name="org.openqa.selenium.chrome.ChromeDriver"/>
     <fullyQualifiedTypeName name="io.github.bonigarcia.wdm.WebDriverManager"/>
-    <fullyQualifiedTypeName name="org.openqa.selenium.By"/>
+    <fullyQualifiedTypeName name="Pages.LoginPage"/>
     <fullyQualifiedTypeName name="org.openqa.selenium.Keys"/>
+    <fullyQualifiedTypeName name="tests.LoginPageTestCase"/>
+    <fullyQualifiedTypeName name="org.testng.annotations.BeforeTest"/>
+    <fullyQualifiedTypeName name="org.testng.annotations.AfterTest"/>
+    <fullyQualifiedTypeName name="com.aventstack.extentreports.reporter.ExtentReporter"/>
+    <fullyQualifiedTypeName name="com.aventstack.extentreports.ExtentReports"/>
+    <fullyQualifiedTypeName name="java.util.concurrent.TimeUnit"/>
+    <fullyQualifiedTypeName name="java.time.Duration"/>
+    <fullyQualifiedTypeName name="org.openqa.selenium.By"/>
+    <fullyQualifiedTypeName name="Pages.CatalogPageObjects"/>
+    <fullyQualifiedTypeName name="org.apache.logging.log4j.internal.LogManagerStatus"/>
+    <fullyQualifiedTypeName name="org.apache.logging.log4j.message.LoggerNameAwareMessage"/>
+    <fullyQualifiedTypeName name="org.apache.logging.log4j.LogManager"/>
+    <fullyQualifiedTypeName name="Pages.LoginPageObjects"/>
+    <fullyQualifiedTypeName name="Pages.OffersPageObjects"/>
 </qualifiedTypeNameHistroy>

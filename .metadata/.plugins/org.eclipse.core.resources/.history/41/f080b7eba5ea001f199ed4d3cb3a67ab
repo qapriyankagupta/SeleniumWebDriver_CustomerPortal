@@ -1,0 +1,19 @@
+package config;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+
+public class PropertiesFile {
+
+	public static void main(String[] args) {
+
+	}
+	
+	public static void getProperties() {
+		Properties prop=new Properties();
+		InputStream input=new FileInputStream("");
+
+	}
+	
+
+}

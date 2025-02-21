@@ -1,0 +1,219 @@
+package tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.testng.annotations.*;
+
+import Pages.CatalogPageObjects;
+import Pages.LoginPageObjects;
+import Pages.OffersPageObjects;
+
+import static org.testng.Assert.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import java.io.File;
+import java.time.Duration;
+
+import org.apache.commons.io.FileUtils;
+
+public class Approver_CreateOffers {
+	static WebDriver driver=null;
+
+
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
+	}
+
+	@Test
+	public void loginPageTestCase() {	    
+		LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+		OffersPageObjects OffersPageObj=new OffersPageObjects(driver);
+
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+		driver.manage().window().maximize();
+
+		LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+		LoginPageObj.setPassword("Shiv123!@#");
+		LoginPageObj.clickSignIn();
+		//LoginPageObj.verifyOffers();
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		Cookie sessionCookie = new Cookie(
+				"sessionKey",
+				"MDE5MDM4NTA0MTM2Mzk5Nzc5MTAwMDAwMzkyNDIwMjUyMDEyMjEzMDU0MTc0NTIxNjY3NDg3KzAw",  
+				".birdzi.com", 
+				"/", 
+				null, 
+				true
+				);
+		driver.manage().addCookie(sessionCookie);
+
+		// Set the userRoles cookie
+		Cookie userRolesCookie = new Cookie(
+				"userRoles",
+				"{\"Company\":\"full-access\",\"Campaign\":\"full-access\",\"Visper\":\"full-access\",\"Support\":\"issue-credit\",\"PLU\":\"hq\",\"CMS\":\"full-access\",\"Offers\":\"approver\",\"Alerts\":\"hide\",\"Segment\":\"full-access\",\"Catalog\":\"full-access\"}",
+				".birdzi.com", 
+				"/", 
+				null, 
+				true
+				);
+		driver.manage().addCookie(userRolesCookie);
+
+		// Set the loggedUserJSON cookie
+		String loggedUserJSON = "{\"contactId\":110,\"contactPortalId\":0,\"companyId\":3604,\"companyName\":\"Coborn\\u0027s, Inc.\",\"locationId\":0,\"storeId\":0,\"firstName\":\"Volker\",\"lastName\":\"Hauf\",\"address1\":\".\",\"address2\":\"aa\",\"city\":\".\",\"countryId\":0,\"countryName\":null,\"stateProvinceId\":0,\"StateProvinceCode\":null,\"StateProvinceName\":null,\"postalCode\":\"aaa\",\"phone\":\"\",\"cell\":\"\",\"fax\":\"\",\"email\":\"vhauf+coborns@birdzi.com\",\"gender\":\"m\",\"vendorId\":0,\"vendorCode\":null,\"vendorName\":null,\"couponVendorDepartmentID\":0,\"couponVendorDepartmentCode\":null,\"couponVendorDepartmentName\":null,\"isEnable\":true,\"isResetPassword\":false,\"permissions\":\"{\\\"Campaign\\\":\\\"Read Only\\\",\\\"Company\\\":\\\"Hide\\\",\\\"Analytics\\\":\\\"Hide\\\",\\\"Offers\\\":\\\"Approver\\\",\\\"Support\\\":\\\"Issue Credit\\\",\\\"Engagement\\\":\\\"Read Only\\\",\\\"Alerts\\\":\\\"Hide\\\",\\\"Segment\\\":\\\"Full Access\\\",\\\"PLU\\\":\\\"Hide\\\",\\\"Catalog\\\":\\\"Full Access\\\",\\\"Visper\\\":\\\"Full Access\\\",\\\"QSAnalytics\\\":\\\"Marketing\\\",\\\"CMS\\\":\\\"Admin\\\"}\",\"password\":null}";
+
+		Cookie loggedUserCookie = new Cookie(
+				"loggedUserJSON",
+				loggedUserJSON,
+				".birdzi.com",
+				"/",
+				null,
+				true
+				);
+		driver.manage().addCookie(loggedUserCookie);
+
+		// Set the bannerListJSON cookie
+		String bannerListJSON = "[{\"bannerCompanyId\":3604,\"bannerCompanyCode\":\"COBORNS\",\"bannerCompanyName\":\"Coborn\\u0027s, Inc.\",\"sequence\":1}]";
+
+		Cookie bannerListCookie = new Cookie(
+				"bannerListJSON",
+				bannerListJSON,
+				".birdzi.com",
+				"/",
+				null,
+				true
+				);
+		driver.manage().addCookie(bannerListCookie);
+
+
+		driver.get("https://customerportal2.birdzi.com/dev/v1.68-d1ecda38550a9e2e06214c7ef2f9818ee898cd66/offer/list?portalUserCompanyID=3604&portalUserContactID=110");
+
+		try {
+			Thread.sleep(3000); 
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		driver.findElement(By.xpath("//div[@id='breadcrumb']/div[2]/div/a/button")).click();
+
+		try {
+			Thread.sleep(3000); 
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("Current URL: " + driver.getCurrentUrl());
+
+		// Refresh the page
+		driver.navigate().refresh();
+
+		driver.findElement(By.xpath("//input[@type='text']")).click();
+		driver.findElement(By.xpath("//input[@type='text']")).clear();
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String todaysDateAndTime = sdf.format(new Date());
+
+		// Create the random name with "Offer" and today's date + time
+		String randomName = "Offer " + todaysDateAndTime;
+
+		// Send the generated name into the text field
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys(randomName);
+		
+		OffersPageObj.setOfferName(randomName);
+
+		driver.findElement(By.xpath("//textarea")).click();
+		driver.findElement(By.xpath("//textarea")).clear();
+		driver.findElement(By.xpath("//textarea")).sendKeys("offer description");
+		driver.findElement(By.xpath("//div[2]/textarea")).click();
+		driver.findElement(By.xpath("//div[2]/textarea")).clear();
+		driver.findElement(By.xpath("//div[2]/textarea")).sendKeys("terms");
+		driver.findElement(By.xpath("//div[2]/input")).click();
+		driver.findElement(By.xpath("//div[2]/input")).clear();
+		driver.findElement(By.xpath("//div[2]/input")).sendKeys("offer name");
+
+		JavascriptExecutor scrolldown_1 = (JavascriptExecutor) driver;
+		scrolldown_1.executeScript("window.scrollBy(0, 500);"); 
+
+		// Open the start datepicker
+		driver.findElement(By.id("startDate")).click();
+
+		// Get the current date (or select a specific date from the start datepicker)
+		SimpleDateFormat dayFormat = new SimpleDateFormat("d");
+		Calendar calendar = Calendar.getInstance();
+
+		// Let's assume today's date (or whatever date user selects) is our start date for now
+		String todayDay = dayFormat.format(new Date()); // Use selected start date here if needed
+
+		// Select the start date (e.g., today or any specific date)
+		driver.findElement(By.linkText(todayDay)).click();
+
+		// Now calculate the end date, 30 days after the selected start date
+		calendar.add(Calendar.DAY_OF_MONTH, 3); // Add 30 days
+		Date endDate = calendar.getTime();
+		String endDateStr = new SimpleDateFormat("MM/dd/yyyy").format(endDate);
+
+		// Extract the day of the calculated end date (e.g., 22 for 02/22)
+		String endDay = new SimpleDateFormat("d").format(endDate);
+
+		// Open the end datepicker
+		driver.findElement(By.id("endDate")).click();
+
+		// Select the calculated end day from the end datepicker
+		driver.findElement(By.linkText(endDay)).click();
+
+		// Scroll down using JavaScript
+		JavascriptExecutor scrolldown_2 = (JavascriptExecutor) driver;
+		scrolldown_2.executeScript("window.scrollBy(0, 500);"); 
+		driver.findElement(By.xpath("//div[6]/div/div/input")).click();
+		driver.findElement(By.xpath("//div[6]/div/div/input")).clear();
+
+
+		driver.findElement(By.xpath("//div[6]/div/div/input")).sendKeys("5");
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Discount *'])[1]/following::div[1]")).click();
+
+		JavascriptExecutor scrolldown_3 = (JavascriptExecutor) driver;
+		scrolldown_3.executeScript("window.scrollBy(0, 500);"); 
+
+		driver.findElement(By.xpath("//div[2]/span/input")).click();
+		driver.findElement(By.xpath("//div[2]/span/input")).clear();
+		driver.findElement(By.xpath("//div[2]/span/input")).sendKeys("0070074803654");
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Product Image'])[1]/following::div[1]")).click();
+
+		// Wait for 3 seconds
+		try {
+			Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+
+
+		// Scroll to the top of the page
+		JavascriptExecutor scrollTop = (JavascriptExecutor) driver;
+		scrollTop.executeScript("window.scrollTo(0, 0);");
+
+		// Wait for 3 seconds
+		try {
+			Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Change'])[1]/following::button[1]")).click();
+	}
+
+	@AfterTest
+	public void tearDownTest() {
+		//driver.close();
+		//driver.quit();
+		System.out.println("Offer created successfully"); 
+	}
+}

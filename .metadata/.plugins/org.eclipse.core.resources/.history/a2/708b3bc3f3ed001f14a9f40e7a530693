@@ -1,0 +1,58 @@
+package Pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class LoginPageObjects {
+	WebDriver driver=null;
+	
+	By email_field=By.id("_58_login");
+	By password_field=By.id("_58_password");
+	By titleOffers=By.xpath("//span[normalize-space()='Offers']");
+	
+	public LoginPageObjects(WebDriver driver) {
+		this.driver=driver;
+	}
+	
+	public void setEmail(String EmailInput) {
+	driver.findElement(email_field).sendKeys(EmailInput);
+}
+	
+	public void setPassword(String PasswordInput) {
+		driver.findElement(password_field).sendKeys(PasswordInput);
+		
+	}	
+
+	public void clickSignIn() {
+		driver.findElement(password_field).sendKeys(Keys.RETURN);
+		
+	}	
+
+	public void verifyOffers() {
+
+        try {
+            // Locate the span element that contains "Offers"
+            WebElement offersElement = driver.findElement(By.xpath("//span[text()='Offers']"));
+            
+            // Get the text from the element
+            String offersText = offersElement.getText();
+            
+            // Assert that the text is "Offers"
+            Assert.assertEquals(offersText, "Offers", "The text is not 'Offers'");
+            
+            // If we reach this point, the element has the correct text
+            return true; 
+        } catch (Exception e) {
+            // Log and handle the exception (element not found or text mismatch)
+            System.out.println("Offers element not found or text mismatch: " + e.getMessage());
+            return false;
+        }
+    }
+}
+
+	}
+
+}

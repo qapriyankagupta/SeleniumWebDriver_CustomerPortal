@@ -1,0 +1,185 @@
+package tests;
+
+import java.util.regex.Pattern;
+import java.util.concurrent.TimeUnit;
+import org.testng.annotations.*;
+
+import Pages.CatalogPageObjects;
+import Pages.LoginPageObjects;
+
+import static org.testng.Assert.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.time.Duration;
+
+import org.apache.commons.io.FileUtils;
+
+public class Approver_CreateOffers {
+	static WebDriver driver=null;
+
+
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
+	}
+
+	@Test
+	public void loginPageTestCase() {	    
+		LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+		driver.manage().window().maximize();
+
+		LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+		LoginPageObj.setPassword("Shiv123!@#");
+		LoginPageObj.clickSignIn();
+		//LoginPageObj.verifyOffers();
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		Cookie sessionCookie = new Cookie(
+	            "sessionKey",
+	            "MDE5MDM4NTA0MTM2Mzk5Nzc5MTAwMDAwMzkyNDIwMjUyMDEyMjEzMDU0MTc0NTIxNjY3NDg3KzAw",  
+	            ".birdzi.com", 
+	            "/", 
+	            null, 
+	            true
+	        );
+	        driver.manage().addCookie(sessionCookie);
+
+	        // Set the userRoles cookie
+	        Cookie userRolesCookie = new Cookie(
+	            "userRoles",
+	            "{\"Company\":\"full-access\",\"Campaign\":\"full-access\",\"Visper\":\"full-access\",\"Support\":\"issue-credit\",\"PLU\":\"hq\",\"CMS\":\"full-access\",\"Offers\":\"approver\",\"Alerts\":\"hide\",\"Segment\":\"full-access\",\"Catalog\":\"full-access\"}",
+	            ".birdzi.com", 
+	            "/", 
+	            null, 
+	            true
+	        );
+	        driver.manage().addCookie(userRolesCookie);
+
+	        // Set the loggedUserJSON cookie
+	        String loggedUserJSON = "{\"contactId\":110,\"contactPortalId\":0,\"companyId\":3604,\"companyName\":\"Coborn\\u0027s, Inc.\",\"locationId\":0,\"storeId\":0,\"firstName\":\"Volker\",\"lastName\":\"Hauf\",\"address1\":\".\",\"address2\":\"aa\",\"city\":\".\",\"countryId\":0,\"countryName\":null,\"stateProvinceId\":0,\"StateProvinceCode\":null,\"StateProvinceName\":null,\"postalCode\":\"aaa\",\"phone\":\"\",\"cell\":\"\",\"fax\":\"\",\"email\":\"vhauf+coborns@birdzi.com\",\"gender\":\"m\",\"vendorId\":0,\"vendorCode\":null,\"vendorName\":null,\"couponVendorDepartmentID\":0,\"couponVendorDepartmentCode\":null,\"couponVendorDepartmentName\":null,\"isEnable\":true,\"isResetPassword\":false,\"permissions\":\"{\\\"Campaign\\\":\\\"Read Only\\\",\\\"Company\\\":\\\"Hide\\\",\\\"Analytics\\\":\\\"Hide\\\",\\\"Offers\\\":\\\"Approver\\\",\\\"Support\\\":\\\"Issue Credit\\\",\\\"Engagement\\\":\\\"Read Only\\\",\\\"Alerts\\\":\\\"Hide\\\",\\\"Segment\\\":\\\"Full Access\\\",\\\"PLU\\\":\\\"Hide\\\",\\\"Catalog\\\":\\\"Full Access\\\",\\\"Visper\\\":\\\"Full Access\\\",\\\"QSAnalytics\\\":\\\"Marketing\\\",\\\"CMS\\\":\\\"Admin\\\"}\",\"password\":null}";
+	        
+	        Cookie loggedUserCookie = new Cookie(
+	            "loggedUserJSON",
+	            loggedUserJSON,
+	            ".birdzi.com",
+	            "/",
+	            null,
+	            true
+	        );
+	        driver.manage().addCookie(loggedUserCookie);
+
+	        // Set the bannerListJSON cookie
+	        String bannerListJSON = "[{\"bannerCompanyId\":3604,\"bannerCompanyCode\":\"COBORNS\",\"bannerCompanyName\":\"Coborn\\u0027s, Inc.\",\"sequence\":1}]";
+	        
+	        Cookie bannerListCookie = new Cookie(
+	            "bannerListJSON",
+	            bannerListJSON,
+	            ".birdzi.com",
+	            "/",
+	            null,
+	            true
+	        );
+	        driver.manage().addCookie(bannerListCookie);
+
+
+		driver.get("https://customerportal2.birdzi.com/dev/v1.68-d1ecda38550a9e2e06214c7ef2f9818ee898cd66/offer/list?portalUserCompanyID=3604&portalUserContactID=110");
+		
+		 // Wait for 3 seconds
+	    try {
+	        Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+		driver.findElement(By.xpath("//div[@id='breadcrumb']/div[2]/div/a/button")).click();
+		 // Wait for 3 seconds
+	    try {
+	        Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+		
+
+		//driver.get("https://customerportal2.birdzi.com/dev/v1.68-d1ecda38550a9e2e06214c7ef2f9818ee898cd66/offer/create?portalUserCompanyID=3604&portalUserContactID=110&offerId=1004042446");
+		System.out.println("Current URL: " + driver.getCurrentUrl());
+		// Refresh the page
+				driver.navigate().refresh();
+
+		
+		
+		
+		
+		driver.findElement(By.xpath("//input[@type='text']")).click();
+		driver.findElement(By.xpath("//input[@type='text']")).clear();
+		driver.findElement(By.xpath("//input[@type='text']")).sendKeys("offer 777");
+		driver.findElement(By.xpath("//textarea")).click();
+		driver.findElement(By.xpath("//textarea")).clear();
+		driver.findElement(By.xpath("//textarea")).sendKeys("offer description");
+		driver.findElement(By.xpath("//div[2]/textarea")).click();
+		driver.findElement(By.xpath("//div[2]/textarea")).clear();
+		driver.findElement(By.xpath("//div[2]/textarea")).sendKeys("terms");
+		driver.findElement(By.xpath("//div[2]/input")).click();
+		driver.findElement(By.xpath("//div[2]/input")).clear();
+		driver.findElement(By.xpath("//div[2]/input")).sendKeys("offer name");
+		
+		JavascriptExecutor scrolldown_1 = (JavascriptExecutor) driver;
+		scrolldown_1.executeScript("window.scrollBy(0, 500);"); 
+		
+		driver.findElement(By.id("startDate")).click();
+		driver.findElement(By.linkText("18")).click();
+		driver.findElement(By.id("endDate")).click();
+		driver.findElement(By.linkText("22")).click();
+		
+		// Scroll down using JavaScript
+		JavascriptExecutor scrolldown_2 = (JavascriptExecutor) driver;
+		scrolldown_2.executeScript("window.scrollBy(0, 500);"); 
+		driver.findElement(By.xpath("//div[6]/div/div/input")).click();
+		driver.findElement(By.xpath("//div[6]/div/div/input")).clear();
+		
+		
+		driver.findElement(By.xpath("//div[6]/div/div/input")).sendKeys("5");
+		driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Discount *'])[1]/following::div[1]")).click();
+
+				JavascriptExecutor scrolldown_3 = (JavascriptExecutor) driver;
+				scrolldown_3.executeScript("window.scrollBy(0, 500);"); 
+		
+				driver.findElement(By.xpath("//div[2]/span/input")).click();
+			    driver.findElement(By.xpath("//div[2]/span/input")).clear();
+			    driver.findElement(By.xpath("//div[2]/span/input")).sendKeys("0070074803654");
+			    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Product Image'])[1]/following::div[1]")).click();
+	    
+	    // Wait for 3 seconds
+	    try {
+	        Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+
+		
+
+	 // Scroll to the top of the page
+	    JavascriptExecutor scrollTop = (JavascriptExecutor) driver;
+	    js.executeScript("window.scrollTo(0, 0);");
+	    
+	 // Wait for 3 seconds
+	    try {
+	        Thread.sleep(3000); // 3000 milliseconds = 3 seconds
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+
+	    driver.findElement(By.xpath("(.//*[normalize-space(text()) and normalize-space(.)='Change'])[1]/following::button[1]")).click();
+	    }
+
+	@AfterTest
+	public void tearDownTest() {
+		//driver.close();
+		//driver.quit();
+		System.out.println("Login completed successfully"); 
+	}
+}

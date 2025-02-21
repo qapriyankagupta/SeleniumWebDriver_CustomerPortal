@@ -1,0 +1,72 @@
+package tests;
+
+import org.testng.annotations.Test;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.LoggerNameAwareMessage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Pages.LoginPageObjects;
+
+public class Login2 {
+	static WebDriver driver=null;
+	static Logger logger=LogManager.getLogger(Login2.class);
+
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
+	}
+
+	@Test
+	public void loginPageTestCase() {	    
+	    LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+	    
+	    driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+	    driver.manage().window().maximize();
+	    
+	    LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+	    LoginPageObj.setPassword("Shiv123!@#");
+	    LoginPageObj.clickSignIn();
+	    try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    LoginPageObj.verifyOffers();
+	 }
+	
+	@AfterMethod
+	public void afterTestMethod(org.testng.ITestResult result) {
+	    // Check if the test failed
+	    if (result.getStatus() == org.testng.ITestResult.FAILURE) {
+	        // Log failure details
+	        logger.error("Test failed: " + result.getName()); // Test name
+	        logger.error("Failure reason: " + result.getThrowable()); // The cause of failure (stack trace)
+	    } else if (result.getStatus() == org.testng.ITestResult.SUCCESS) {
+	        // Log success details
+	        logger.info("Test passed: " + result.getName()); // Test name
+	    } else if (result.getStatus() == org.testng.ITestResult.SKIP) {
+	        // Log skipped tests
+	        logger.warn("Test skipped: " + result.getName()); // Test name
+	    }
+
+	    // Perform cleanup actions after each test
+	    System.out.println("Test completed: " + result.getName());
+	}
+	
+	@AfterTest
+	public void tearDownTest() {
+	    //driver.close();
+	    //driver.quit();
+	    System.out.println("\n Login completed successfully \n"); 
+	    logger.info("This is Login Test Case");
+	    System.out.println("Login Test Completed");
+	}
+
+}

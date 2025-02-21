@@ -1,0 +1,29 @@
+package config;
+
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
+
+public class PropertiesFile {
+
+	public static void main(String[] args) {
+		getProperties();
+	}
+
+	public static void getProperties() {
+		try {
+			Properties prop=new Properties();
+			String ProjectPath=System.getProperty("user.dir");
+			InputStream input=new FileInputStream(ProjectPath+"\\src\\test\\java\\config\\config.properties");
+			prop.load(input);
+			String browser=prop.getProperty("browser");
+			System.out.println(browser);
+		}catch(Exception exp){
+			System.out.println(exp.getMessage());
+			System.out.println(exp.getCause());
+			exp.printStackTrace();
+			
+		}
+}
+}

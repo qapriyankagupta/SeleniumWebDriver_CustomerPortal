@@ -1,0 +1,62 @@
+package tests;
+
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import Pages.CatalogPageObjects;
+import Pages.LoginPageObjects;
+
+public class Catalog2 {
+	static WebDriver driver=null;
+
+	@BeforeTest
+	public void setupTest() {
+		driver=new ChromeDriver();
+	}
+
+	@Test
+	public void loginPageTestCase() {	    
+		LoginPageObjects LoginPageObj=new LoginPageObjects(driver);
+		CatalogPageObjects CatalogPageObj=new CatalogPageObjects(driver);
+
+		driver.get("https://customerportal.birdzi.com/en/web/guest/home");
+		driver.manage().window().maximize();
+
+		LoginPageObj.setEmail("pgupta+coborns@birdzi.com");
+		LoginPageObj.setPassword("Shiv123!@#");
+		LoginPageObj.clickSignIn();
+		LoginPageObj.verifyOffers();
+		WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(10));
+
+		Cookie sessionCookie = new Cookie(
+				"sessionKey",  
+				"MDEzODIxNjg5MzY3OTQwMjM3NTEwMDAwMDE3MTcyMDIyMjEyMjE0MzEyNDAzNDEyMTc0NjMxMiswMA==",  
+				".birdzi.com",  
+				"/",null,true);     
+
+		driver.manage().addCookie(sessionCookie);
+
+		driver.get("https://customerportal2.birdzi.com/dev/v1.67-2d33b73a8724704c950c0557f5dca14c1d0cd78f/catalog/products?portalUserCompanyID=3604&portalUserContactID=110");
+
+		CatalogPageObj.enterSearch("Cheese");
+		CatalogPageObj.ClickSEARCH();
+	}
+
+	@AfterTest
+	public void tearDownTest() {
+		//driver.close();
+		//driver.quit();
+		System.out.println("Login completed successfully"); 
+	}
+}

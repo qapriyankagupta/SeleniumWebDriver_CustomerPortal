@@ -1,0 +1,91 @@
+package Pages;
+
+import Pages.LoginPageObjects;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class OffersPageObjects {
+	WebDriver driver=null;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	String todaysDateAndTime = sdf.format(new Date());
+
+	// Create the random name with "Offer" and today's date + time
+	String randomName = "Offer " + todaysDateAndTime;
+	By offer_Name=By.xpath("//input[@type='text']");
+
+	By email_field=By.id("_58_login");
+	By password_field=By.id("_58_password");
+	By titleOffers=By.xpath("//span[normalize-space()='Offers']");
+	By searchCatalog=By.id("searchString");
+
+	public OffersPageObjects(WebDriver driver) {
+		this.driver=driver;
+	}
+
+	public void setOfferName(String offerName) {
+		driver.findElement(By.xpath("//input[@type='text']")).click();
+		  driver.findElement(By.xpath("//input[@type='text']")).clear();
+		  
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); String
+		  todaysDateAndTime = sdf.format(new Date());
+		  
+		  // Create the random name with "Offer" and today's date + time String
+		  randomName = "Offer " + todaysDateAndTime;
+		  
+		  // Send the generated name into the text field
+		  driver.findElement(By.xpath("//input[@type='text']")).sendKeys(randomName);
+		driver.findElement(offer_Name).sendKeys(offerName);
+	}
+
+	public void setPassword(String PasswordInput) {
+		driver.findElement(password_field).sendKeys(PasswordInput);
+
+	}	
+
+	public void ClickSignIn() {
+		driver.findElement(password_field).sendKeys(Keys.RETURN);
+
+	}	
+
+	public void verifyOffers() {
+		try {
+			// Locate the element
+			WebElement offersElement = driver.findElement(titleOffers);
+
+			// Get the text of the element
+			String text = offersElement.getText();
+
+			// Verify if the text is "Offers"
+			if (text.equals("OFFERS")) {
+				System.out.println("Text 'OFFERS' found successfully");
+			} else {
+				System.out.println("Text mismatch. Expected 'OFFERS', but found: " + text);
+			}
+		} catch (NoSuchElementException e) {
+			// If the element is not found, handle the exception
+			System.out.println("Element with text 'OFFERS' not found.");
+		}
+	}
+
+	public void enterSearch(String searchInput) {
+		driver.findElement(searchCatalog).sendKeys(searchInput);
+
+	}	
+
+	public void ClickSEARCH() {
+		driver.findElement(searchCatalog).sendKeys(Keys.RETURN);
+
+	}	
+
+
+
+
+}
